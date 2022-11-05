@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Pemasukan {
+  id             Int      @id @default(autoincrement())
+  user_id        Int
+  nama_pemasukan String   @db.VarChar(100)
+  deskripsi      String   @db.Text()
+  harga          Float    @db.Double()
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now()) @updatedAt
+  user           User     @relation(fields: [user_id], references: [id], onDelete: NoAction)
+
+  @@map("pemasukan")
+}
+
+model Pengeluaran {
+  id               Int      @id @default(autoincrement())
+  user_id          Int
+  nama_pengeluaran String   @db.VarChar(100)
+  deskripsi        String   @db.Text()
+  harga            Float    @db.Double()
+  createdAt        DateTime @default(now()) @db.Date
+  updatedAt        DateTime @default(now()) @updatedAt
+  user             User     @relation(fields: [user_id], references: [id], onDelete: NoAction)
+
+  @@map("pengeluaran")
+}
+
+model User {
+  id          Int           @id @default(autoincrement())
+  nama        String        @db.VarChar(100)
+  email       String        @unique @db.VarChar(200)
+  password    String        @unique @db.VarChar(100)
+  createdAt   DateTime      @default(now()) @db.Date
+  updatedAt   DateTime      @default(now()) @updatedAt
+  pemasukan   Pemasukan[]
+  pengeluaran Pengeluaran[]
+
+  @@map("user")
+}
+
+// npx prisma format
+// npx prisma migrate dev --name init
+// npm install @prisma/client
+// Whenever you make changes to your Prisma schema in the future, you manually need to invoke prisma generate in order to accommodate the changes in your Prisma Client API.
