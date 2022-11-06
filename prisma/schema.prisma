@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,12 +11,13 @@ model Pemasukan {
   id             Int      @id @default(autoincrement())
   user_id        Int
   nama_pemasukan String   @db.VarChar(100)
-  deskripsi      String   @db.Text()
-  harga          Float    @db.Double()
+  deskripsi      String   @db.Text
+  harga          Float
   createdAt      DateTime @default(now())
   updatedAt      DateTime @default(now()) @updatedAt
   user           User     @relation(fields: [user_id], references: [id], onDelete: NoAction)
 
+  @@index([user_id], map: "pemasukan_user_id_fkey")
   @@map("pemasukan")
 }
 
@@ -27,12 +25,13 @@ model Pengeluaran {
   id               Int      @id @default(autoincrement())
   user_id          Int
   nama_pengeluaran String   @db.VarChar(100)
-  deskripsi        String   @db.Text()
-  harga            Float    @db.Double()
+  deskripsi        String   @db.Text
+  harga            Float
   createdAt        DateTime @default(now()) @db.Date
   updatedAt        DateTime @default(now()) @updatedAt
   user             User     @relation(fields: [user_id], references: [id], onDelete: NoAction)
 
+  @@index([user_id], map: "pengeluaran_user_id_fkey")
   @@map("pengeluaran")
 }
 
@@ -48,8 +47,3 @@ model User {
 
   @@map("user")
 }
-
-// npx prisma format
-// npx prisma migrate dev --name init
-// npm install @prisma/client
-// Whenever you make changes to your Prisma schema in the future, you manually need to invoke prisma generate in order to accommodate the changes in your Prisma Client API.
