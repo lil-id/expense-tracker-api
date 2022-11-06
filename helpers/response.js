@@ -1,3 +1,28 @@
+<<<<<<< HEAD
+class _response {
+  sendResponse = (res, data) => {
+    try {
+      if (data.code) {
+        res.status(data.code);
+        delete data.code;
+        res.send(data);
+        return true;
+      }
+      res.status(data && data.status ? 200 : 400);
+      res.send(data);
+      return true;
+    } catch (error) {
+      res.status(400).send({
+        status: false,
+        error,
+      });
+      return false;
+    }
+  };
+}
+
+module.exports = new _response();
+=======
 class _response{
     sendResponse = (res, data) => {
         try {
@@ -21,3 +46,4 @@ class _response{
 }
 
 module.exports = new _response()
+>>>>>>> f5341c4192b6c67eeb479248d06cd70afe0b3673
