@@ -1,4 +1,4 @@
-const prisma = require("../helpers/databse");
+const prisma = require("../helpers/database");
 const jwt = require("jsonwebtoken");
 
 const userSession = async (req, res, next) => {
@@ -9,7 +9,7 @@ const userSession = async (req, res, next) => {
       // console.log(token)
       const decoded = jwt.verify(token, "jwt-secret-code");
       // console.log(decoded)
-      const user = await prisma.userTodo.findUnique({
+      const user = await prisma.user.findUnique({
         where: {
           id: decoded.id,
         },

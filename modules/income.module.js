@@ -5,6 +5,9 @@ class _income {
   listIncome = async (body) => {
     try {
       const list = await prisma.pemasukan.findMany({
+        where:{
+          user_id: body.user_id
+        },
         include: {
           user: true,
         },
