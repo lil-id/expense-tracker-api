@@ -54,7 +54,7 @@ class _expense {
 
             return {
                 status: true,
-                code: 201,
+                statusCode: 201,
                 message: "Data Pengeluaran Berhasil Dibuat",
                 data: createExpense
             }
@@ -96,7 +96,7 @@ class _expense {
 
             return {
                 status: true,
-                code: 201,
+                statusCode: 200,
                 message: "Data Pengeluaran Berhasil Diperbarui",
                 data: updateExpense
             }

@@ -7,7 +7,7 @@ const _routes = [
   // http://localhost:3000/api/user
   ["user", UserController],
   ["income", IncomeController],
-  ["expense", ExpenseController]
+  ["expense", ExpenseController],
   ["login", AuthController],
 ];
 

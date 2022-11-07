@@ -1,12 +1,13 @@
 const prisma = require("../helpers/database");
 const Joi = require("joi");
+const userSession = require('../helpers/middleware')
 
 class _income {
-  listIncome = async () => {
+  listIncome = async (id) => {
     try {
       const list = await prisma.pemasukan.findMany({
         where:{
-          user_id: body.user_id
+          user_id: id
         },
         include: {
           user: true,

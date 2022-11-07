@@ -1,6 +1,6 @@
-const m$user = require("../modules/user.module");
-const m$auth = require("../modules/auth.module");
 const { Router } = require("express");
+const m$user = require("../modules/user.module");
+const userSession = require('../helpers/middleware')
 const response = require("../helpers/response");
 
 const UserController = Router();
@@ -16,7 +16,7 @@ const UserController = Router();
  * http://localhost:3000/api/user
  */
 
-UserController.get("/", async (req, res) => {
+UserController.get("/", userSession, async (req, res) => {
   const list = await m$user.listUser();
 
   response.sendResponse(res, list);
@@ -49,10 +49,10 @@ UserController.post("/", async (req, res) => {
  * http://localhost:3000/api/user
  */
 
-UserController.put("/:id", m$auth.authToken, async (req, res) => {
+UserController.put("/:id", userSession, async (req, res) => {
   const { id } = req.params;
   //req body berisis data yang dikirim ke client
-  const update = await m$user.updateUser(req.body, id);
+  const update = await m$user.updateUser(req.body, Number(id));
   response.sendResponse(res, update);
 });
 
@@ -62,7 +62,7 @@ UserController.put("/:id", m$auth.authToken, async (req, res) => {
  *
  * http://localhost:000/api/user
  */
-UserController.delete("/:id", m$auth.authToken, async (req, res) => {
+UserController.delete("/:id", userSession, async (req, res) => {
   const del = await m$user.deleteUser(Number(req.params.id));
 
   response.sendResponse(res, del);
