@@ -1,4 +1,5 @@
 const m$user = require("../modules/user.module");
+const m$auth = require("../modules/auth.module");
 const { Router } = require("express");
 const response = require("../helpers/response");
 
@@ -48,7 +49,7 @@ UserController.post("/", async (req, res) => {
  * http://localhost:3000/api/user
  */
 
-UserController.put("/:id", async (req, res) => {
+UserController.put("/:id", m$auth.authToken, async (req, res) => {
   const { id } = req.params;
   //req body berisis data yang dikirim ke client
   const update = await m$user.updateUser(req.body, id);
@@ -61,7 +62,7 @@ UserController.put("/:id", async (req, res) => {
  *
  * http://localhost:000/api/user
  */
-UserController.delete("/:id", async (req, res) => {
+UserController.delete("/:id", m$auth.authToken, async (req, res) => {
   const del = await m$user.deleteUser(Number(req.params.id));
 
   response.sendResponse(res, del);
