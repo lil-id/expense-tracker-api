@@ -1,8 +1,8 @@
 const { Router } = require('express');
 const m$income = require('../modules/income.module');
 const response= require('../helpers/response');
-const IncomeController = Router();
 
+const IncomeController = Router();
 
 IncomeController.get('/', async (req,res)=> {
    const list = await m$income.listIncome()

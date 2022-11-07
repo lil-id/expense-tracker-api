@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 class _user {
   listUser = async () => {
     try {
-      const list = await prisma.user.findmany();
+      const list = await prisma.user.findMany();
 
       return {
         status: true,

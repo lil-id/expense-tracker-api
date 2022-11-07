@@ -28,7 +28,6 @@ model Pengeluaran {
   deskripsi        String   @db.Text
   harga            Float
   createdAt        DateTime @default(now()) @db.Date
-
   updatedAt        DateTime @default(now()) @updatedAt
   user             User     @relation(fields: [user_id], references: [id], onDelete: NoAction)
 
