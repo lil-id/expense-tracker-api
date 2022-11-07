@@ -48,7 +48,7 @@ class _auth {
         email: user.email,
       };
 
-      const token = jwt.sign(payload, "jwt-secret-code", { expiresIn: "5h" });
+      const token = jwt.sign(payload, process.env.TOKEN_CODE, { expiresIn: "5h" });
       return {
         status: true,
         data: { token },
