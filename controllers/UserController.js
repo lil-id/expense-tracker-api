@@ -1,4 +1,5 @@
 const m$user = require("../modules/user.module");
+const m$auth = require("../modules/auth.module");
 const { Router } = require("express");
 const response = require("../helpers/response");
 
@@ -12,7 +13,7 @@ const UserController = Router();
 /**
  * List User
  *
- * http://localhost:3000/api/users
+ * http://localhost:3000/api/user
  */
 
 UserController.get("/", async (req, res) => {
@@ -27,7 +28,7 @@ UserController.get("/", async (req, res) => {
  * @param {string} email
  * @param {string} password
  *
- * http://localhost:3000/api/users/add
+ * http://localhost:3000/api/user
  */
 
 UserController.post("/", async (req, res) => {
@@ -45,14 +46,13 @@ UserController.post("/", async (req, res) => {
  * @param {string} email
  * @param {string} password
  *
- * http://localhost:8000/api/users
+ * http://localhost:3000/api/user
  */
 
-UserController.put("/", async (req, res) => {
-  // req.body input dari client yang berupa json
-  const update = await m$user.updateUser(req.body);
-
-  // response helper
+UserController.put("/:id", m$auth.authToken, async (req, res) => {
+  const { id } = req.params;
+  //req body berisis data yang dikirim ke client
+  const update = await m$user.updateUser(req.body, id);
   response.sendResponse(res, update);
 });
 
@@ -60,9 +60,9 @@ UserController.put("/", async (req, res) => {
  * Delete User
  * @param {number} id
  *
- * http://localhost:8000/api/users/:id
+ * http://localhost:000/api/user
  */
-UserController.delete("/:id", async (req, res) => {
+UserController.delete("/:id", m$auth.authToken, async (req, res) => {
   const del = await m$user.deleteUser(Number(req.params.id));
 
   response.sendResponse(res, del);

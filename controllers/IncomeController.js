@@ -2,15 +2,22 @@ const { Router } = require('express');
 const m$income = require('../modules/income.module');
 const response= require('../helpers/response');
 
+const userSession = require('../helpers/middleware')
+
 const IncomeController = Router();
 
-IncomeController.get('/', async (req,res)=> {
-   const list = await m$income.listIncome()
+IncomeController.get('/',userSession, async (req,res)=> {
+   const list = await m$income.listIncome({user_id: req.user.id})
    response.sendResponse(res, list)
 })
 
-IncomeController.post('/', async (req,res) => {
-    const add = await m$income.addIncome(req.body)
+IncomeController.post('/', userSession, async (req,res) => {
+    const add = await m$income.addIncome({
+        user_id: req.user.id,
+        nama_pemasukan: req.body.nama_pemasukan, 
+        deskripsi: req.body.deskripsi,
+        harga: req.body.harga,
+    })
     response.sendResponse(res, add)
 })
 

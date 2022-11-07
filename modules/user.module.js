@@ -1,7 +1,8 @@
 const prisma = require("../helpers/database");
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
-
+const { number } = require("joi");
+prisma.user.create;
 class _user {
   listUser = async () => {
     try {
@@ -68,11 +69,10 @@ class _user {
     }
   };
 
-  updateUser = async (body) => {
+  updateUser = async (body, id) => {
     try {
       // Validation input
       const schema = Joi.object({
-        id: Joi.number().required(),
         nama: Joi.string(),
         email: Joi.string(),
         password: Joi.string(),
@@ -98,11 +98,11 @@ class _user {
       // nama, email, password
       const update = await prisma.user.update({
         where: {
-          id: body.id,
+          id: Number(id),
         },
         data: {
           email: body.email,
-          nama: body.name,
+          nama: body.nama,
           password: password,
         },
       });
