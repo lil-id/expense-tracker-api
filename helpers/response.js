@@ -11,6 +11,7 @@ class _response {
       res.send(data);
       return true;
     } catch (error) {
+      console.error(`sendResponse response helper Error: `, error);
       res.status(400).send({
         status: false,
         error,
