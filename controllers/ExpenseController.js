@@ -11,7 +11,12 @@ ExpenseController.get('/', userSession, async (req, res) => {
 })
 
 ExpenseController.post('/', userSession, async (req, res) => {
-    const add = await m$expense.addExpense(req.body)
+    const add = await m$expense.addExpense({ 
+        user_id: req.user.id,
+        nama_pengeluaran: req.body.nama_pengeluaran, 
+        deskripsi: req.body.deskripsi,
+        harga: req.body.harga,
+    })
     response.sendResponse(res, add)
 })
 
