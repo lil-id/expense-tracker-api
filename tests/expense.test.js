@@ -3,9 +3,9 @@ const app = require('./server')
 const jwt = require("jsonwebtoken");
 
 let token
-let firstIncomeId
+let firstExpenseId
 
-describe('Income Api Testing', () => {
+describe('Expense Api Testing', () => {
     test('Login', async () => {
         const res = await request(app).post('/api/login').send({
             email: "xxx@gmail.com",
@@ -15,37 +15,37 @@ describe('Income Api Testing', () => {
         token = res.body.data.token
     })
 
-    test('Add Income', async () => {
+    test('Add Expense', async () => {
         const decoded = jwt.verify(token, process.env.TOKEN_CODE)
-        const res = await request(app).post('/api/income')
+        const res = await request(app).post('/api/expense')
         .set('Authorization', `Bearer ${token}`).send({
             user_id: decoded.id,
-            nama_pemasukan: "Kalung",
-            deskripsi: "Bahan bahan terbaik",
+            nama_pengeluaran: "Beli Nasi Kuning",
+            deskripsi: "Untuk sarapan pagi ini",
             harga: 100000
         })
         expect(res.statusCode).toBe(200)
     })
 
-    test('List Income', async () => {
-        const res = await request(app).get('/api/income')
+    test('List Expense', async () => {
+        const res = await request(app).get('/api/expense')
         .set('Authorization', `Bearer ${token}`)
         expect(res.statusCode).toBe(200)
-        firstIncomeId = res.body.data[0].id
+        firstExpenseId = res.body.data[0].id
     })
 
-    test('Update Income', async () => {
-        const res = await request(app).put(`/api/income/${firstIncomeId}`)
+    test('Update Expense', async () => {
+        const res = await request(app).put(`/api/expense/${firstExpenseId}`)
         .set('Authorization', `Bearer ${token}`).send({
-            nama_pemasukan: "Topit",
-            deskripsi: "Bahan bahan terbaiks",
+            nama_pengeluaran: "Beli Beras",
+            deskripsi: "Untuk makan minggu ini",
             harga: 700000
         })
         expect(res.statusCode).toBe(200)
     })
 
-    test('Delete Income', async () => {
-        const res = await request(app).delete(`/api/income/${firstIncomeId}`)
+    test('Delete Expense', async () => {
+        const res = await request(app).delete(`/api/expense/${firstExpenseId}`)
         .set('Authorization', `Bearer ${token}`)
         expect(res.statusCode).toBe(200)
     })

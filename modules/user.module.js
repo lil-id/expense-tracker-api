@@ -43,8 +43,7 @@ class _user {
         };
       }
 
-      const password = bcrypt.hashSync(body.password, 10);
-      console.log(body.password, password);
+      const password = bcrypt.hashSync(body.password, 10)
 
       // nama, email, password
       const add = await prisma.user.create({
@@ -98,7 +97,7 @@ class _user {
       // nama, email, password
       const update = await prisma.user.update({
         where: {
-          id: Number(id),
+          id: id,
         },
         data: {
           email: body.email,
@@ -153,7 +152,7 @@ class _user {
 
       return {
         status: false,
-        error: error.message,
+        error: "Unable to delete user because this user has income and expense data",
       };
     }
   };
