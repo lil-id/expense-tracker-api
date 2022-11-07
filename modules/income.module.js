@@ -2,7 +2,7 @@ const prisma = require("../helpers/database");
 const Joi = require("joi");
 
 class _income {
-  listIncome = async (body) => {
+  listIncome = async () => {
     try {
       const list = await prisma.pemasukan.findMany({
         where:{
@@ -19,13 +19,14 @@ class _income {
         data: list,
       };
     } catch (error) {
-      console.error("list Income module error : ", error);
+      console.error("listIncome module error : ", error);
       return {
         status: false,
         error,
       };
     }
   };
+
   addIncome = async (body) => {
     try {
       const schema = Joi.object({
@@ -56,11 +57,11 @@ class _income {
       return {
         status: true,
         statusCode: 201,
-        message: "Data Income Berhasil diBuat",
+        message: "Data Income Berhasil Dibuat",
         data: newIncome,
       };
     } catch (error) {
-      console.error("add Income module error : ", error);
+      console.error("addIncome module error : ", error);
       return {
         status: false,
         error,
@@ -99,17 +100,18 @@ class _income {
       return {
         status: true,
         statusCode: 201,
-        message: "Data Income Berhasil DiUpdate",
+        message: "Data Income Berhasil Diperbarui",
         data: updateIncome,
       };
     } catch (error) {
-      console.error("update Income module error : ", error);
+      console.error("updateIncome module error : ", error);
       return {
         status: false,
         error,
       };
     }
   };
+
   deleteIncome = async (id) => {
     try {
       const delIncome = await prisma.pemasukan.delete({
@@ -119,7 +121,7 @@ class _income {
       });
       return {
         status: true,
-        statusCode: 201,
+        statusCode: 200,
         message: "Data Income Berhasil delete",
         data: delIncome,
       };
@@ -132,4 +134,5 @@ class _income {
     }
   };
 }
+
 module.exports = new _income();

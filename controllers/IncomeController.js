@@ -1,9 +1,10 @@
 const { Router } = require('express');
 const m$income = require('../modules/income.module');
 const response= require('../helpers/response');
-const userSession = require('../helpers/middleware')
-const IncomeController = Router();
 
+const userSession = require('../helpers/middleware')
+
+const IncomeController = Router();
 
 IncomeController.get('/',userSession, async (req,res)=> {
    const list = await m$income.listIncome({user_id: req.user.id})
