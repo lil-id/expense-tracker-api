@@ -14,7 +14,7 @@ model Pemasukan {
   deskripsi      String   @db.Text
   harga          Float
   createdAt      DateTime @default(now())
-  updatedAt      DateTime @default(now()) @updatedAt
+  updatedAt      DateTime @updatedAt
   user           User     @relation(fields: [user_id], references: [id], onDelete: NoAction)
 
   @@index([user_id], map: "pemasukan_user_id_fkey")
@@ -27,8 +27,8 @@ model Pengeluaran {
   nama_pengeluaran String   @db.VarChar(100)
   deskripsi        String   @db.Text
   harga            Float
-  createdAt        DateTime @default(now()) @db.Date
-  updatedAt        DateTime @default(now()) @updatedAt
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
   user             User     @relation(fields: [user_id], references: [id], onDelete: NoAction)
 
   @@index([user_id], map: "pengeluaran_user_id_fkey")
@@ -41,7 +41,7 @@ model User {
   email       String        @unique @db.VarChar(200)
   password    String        @unique @db.VarChar(100)
   createdAt   DateTime      @default(now()) 
-  updatedAt   DateTime      @default(now()) @updatedAt
+  updatedAt   DateTime      @updatedAt
   pemasukan   Pemasukan[]
   pengeluaran Pengeluaran[]
 

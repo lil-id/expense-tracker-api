@@ -4,6 +4,8 @@
   "description": "Tugas kelompok SW Backend",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
+    "migration": "npx prisma migrate dev --name second && npm start",
     "dev": "nodemon app.js",
     "test": "jest"
   },

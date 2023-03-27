@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=money_tracker
+      - MYSQL_ROOT_PASSWORD=12345
+    networks:
+      - node-api-network
+    restart: always
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
+    networks:
+      - node-api-network
+    restart: always
+  node-api:
+    container_name: nodeapi1
+    build: .  # . menunjukkan lokasi dari "Dockerfile"
+    ports:
+      - 8000:8000
+    networks:
+      - node-api-network
+    restart: on-failure
+    depends_on:
+      - mysql
+networks:
+  node-api-network:
+    name: node-api-network

@@ -2,7 +2,7 @@ const prisma = require("../helpers/database");
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
 const { number } = require("joi");
-prisma.user.create;
+
 class _user {
   listUser = async () => {
     try {
